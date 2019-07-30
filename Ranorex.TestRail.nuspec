@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>boxblinkracer.RanorexTestRail</id>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <title>Ranorex TestRail Integration</title>
         <authors>Christian Dangl</authors>
         <owners>Christian Dangl</owners>
@@ -20,6 +20,7 @@
             <frameworkAssembly assemblyName="System.Drawing" />
         </frameworkAssemblies>
         <dependencies>
+            <dependency id="System.Net.Http" version="4.3.4" />
         </dependencies>
     </metadata>
     <files>
