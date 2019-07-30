@@ -32,13 +32,13 @@ Now use "Auto-create", followed by "Auto-bind" to create the parameters.
 
 It's time to enter your credentials:
 
-* **TestRailURL**: Your TestRail URL, e.g. https://mycompany.testrail.io
+* **TestRailURL**: Your TestRail URL, e.g. "https://mycompany.testrail.io"
 
 * **TestRailUsername**: Your TestRail username
 
 * **TestRailPassword**: Your TestRail password
 
-* **TestRailTestRunID: **The prepared Test Run in TestRail that you want to send results to, e.g. "R30"
+* **TestRailTestRunID**: The prepared Test Run in TestRail that you want to send results to, e.g. "R30"
 
 
 
