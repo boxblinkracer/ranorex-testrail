@@ -111,7 +111,7 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
                 string testRunLink = testRailURL + "/index.php?/runs/view/" + testRunID.ToUpper().Replace("R", "");
 
                 Report.Success("Successfully sent Test Result for Test " + this.TestCaseID + " to TestRail!");
-                Report.Link(testRunLink);
+                Report.Link("Open Test Run", testRunLink);
             }
             else
             {
