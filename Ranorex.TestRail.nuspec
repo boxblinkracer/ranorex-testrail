@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>boxblinkracer.RanorexTestRail</id>
+        <version>1.0.0</version>
+        <title>Ranorex TestRail Integration</title>
+        <authors>Christian Dangl</authors>
+        <owners>Christian Dangl</owners>
+        <projectUrl>https://github.com/boxblinkracer/ranorex-testrail</projectUrl>
+        <license type="file">LICENSE.txt</license>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Add a decoupled TestRail integration to your Ranorex project and get rid off the 2-way-sync.</description>
+        <copyright>Copyright 2019</copyright>
+        <tags>Ranorex TestRail Integration</tags>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System" />
+            <frameworkAssembly assemblyName="System.Data" />
+            <frameworkAssembly assemblyName="System.Xml" />
+            <frameworkAssembly assemblyName="System.Windows.Forms" />
+            <frameworkAssembly assemblyName="System.Drawing" />
+        </frameworkAssemblies>
+        <dependencies>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="src\**\*.cs" target="content" />
+        <file src="LICENSE.txt" target="" />
+    </files>
+</package>
