@@ -1,7 +1,7 @@
 # Ranorex TestRail Integration
 
 [![GitHub stars](https://img.shields.io/github/stars/boxblinkracer/ranorex-testrail.svg?style=flat-square&label=Stars&style=flat-square)](https://github.com/boxblinkracer/ranorex-testrail/stargazers)
-[![MIT licensed](https://img.shields.io/github/license/boxblinkracer/ranorex-testrail.svg?style=flat-square)](https://github.com/boxblinkracer/ranorex-testrail/blob/master/LICENSE)
+[![MIT licensed](https://img.shields.io/github/license/boxblinkracer/ranorex-testrail.svg?style=flat-square)](https://github.com/boxblinkracer/ranorex-testrail/blob/master/LICENSE.txt)
 
 This integration helps you to get rid off the 2-way-sync between Ranorex and TestRail.
 
@@ -36,7 +36,7 @@ It's time to enter your credentials:
 
 * **TestRailUsername**: Your TestRail username
 
-* **TestRailPassword**: Your TestRail password or API key
+* **TestRailPassword**: Your TestRail password
 
 * **TestRailTestRunID: **The prepared Test Run in TestRail that you want to send results to, e.g. "R30"
 
