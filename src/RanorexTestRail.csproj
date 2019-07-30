@@ -52,6 +52,8 @@
     <Compile Include="Services\Client\TestRailResponse.cs" />
     <Compile Include="Services\Client\TestRailAPIClient.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
