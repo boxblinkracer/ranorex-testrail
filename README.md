@@ -1,6 +1,10 @@
 # Ranorex TestRail Integration
 
-[![GitHub stars](https://img.shields.io/github/stars/boxblinkracer/ranorex-testrail.svg?style=flat-square&label=Stars&style=flat-square)](https://github.com/boxblinkracer/ranorex-testrail/stargazers)
+
+
+![Ranorex TestRail Preview](./preview.jpg)
+
+
 
 This integration helps you to get rid off the 2-way-sync between Ranorex and TestRail.
 
@@ -17,7 +21,7 @@ Define new test cases in TestRail, and add automation to it, when you are ready.
 
 ### 1. Installation
 Open your Ranorex project, right click on your solution and click `Manage Packages`.
-Now search `boxblinkracer/ranorex-testrail` in the NuGet package manager and add it to your project.
+Now search `boxblinkracer.Ranorex.TestRail` in the NuGet package manager and add it to your project.
 
 
 
