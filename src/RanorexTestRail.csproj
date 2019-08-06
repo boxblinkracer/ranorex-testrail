@@ -45,14 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\TestRailStatus.cs" />
-    <Compile Include="Modules\TestRailResult.cs" />
-    <Compile Include="Modules\TestRailSetup.cs" />
+    <Compile Include="RanorexTestRail\Models\TestRailStatus.cs" />
+    <Compile Include="RanorexTestRail\Modules\TestRailResult.cs" />
+    <Compile Include="RanorexTestRail\Modules\TestRailSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Client\TestRailResponse.cs" />
-    <Compile Include="Services\Client\TestRailAPIClient.cs" />
-    <Compile Include="Services\Ranorex\TestResultReader.cs" />
-    <Compile Include="Services\Validator\ConfigurationValidator.cs" />
+    <Compile Include="RanorexTestRail\Services\Client\TestRailResponse.cs" />
+    <Compile Include="RanorexTestRail\Services\Client\TestRailAPIClient.cs" />
+    <Compile Include="RanorexTestRail\Services\Ranorex\TestResultReader.cs" />
+    <Compile Include="RanorexTestRail\Services\Validator\ConfigurationValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
