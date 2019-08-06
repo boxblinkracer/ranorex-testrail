@@ -1,6 +1,8 @@
 ﻿using boxblinkracer.Ranorex.TestRail.Models;
 using boxblinkracer.Ranorex.TestRail.Services;
 using boxblinkracer.Ranorex.TestRail.Services.Client;
+using boxblinkracer.Ranorex.TestRail.Services.Ranorex;
+using boxblinkracer.Ranorex.TestRail.Services.Validator;
 using Ranorex;
 using Ranorex.Core.Reporting;
 using Ranorex.Core.Testing;
@@ -21,6 +23,16 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
     {
 
         /// <summary>
+        /// 
+        /// </summary>
+        private ConfigurationValidator configValidator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int testRailTimeoutSeconds;
+
+        /// <summary>
         /// Gets or sets the value of the test case in TestRail
         /// </summary>
         [TestVariable("2436c39d-0705-4ec3-85fb-5e9835a1ab19")]
@@ -33,6 +45,9 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
         public TestRailResult()
         {
             // Do not delete - a parameterless constructor is required!
+
+            this.configValidator = new ConfigurationValidator();
+            this.testRailTimeoutSeconds = 5;
         }
 
 
@@ -43,13 +58,14 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
         {
             var test = TestSuite.CurrentTestContainer;
             var parameters = TestSuite.Current.Parameters;
+            var container = TestReport.CurrentTestContainerActivity;
 
             string testRailURL = parameters.Keys.Contains("TestRailURL") ? parameters["TestRailURL"] : "";
             string testRailUsername = parameters.Keys.Contains("TestRailUsername") ? parameters["TestRailUsername"] : "";
             string testRailPassword = parameters.Keys.Contains("TestRailPassword") ? parameters["TestRailPassword"] : "";
             string testRunID = parameters.Keys.Contains("TestRailTestRunID") ? parameters["TestRailTestRunID"] : "";
 
-            if (!this.isValidCredentialData(testRailURL, testRailUsername, testRailPassword))
+            if (!this.configValidator.IsValidCredentialData(testRailURL, testRailUsername, testRailPassword))
             {
                 Report.Error("No TestRail API credentials provided. Please configure your credentials in the TestRailSetup action!");
                 return;
@@ -67,29 +83,35 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
                 return;
             }
 
-         
+
+            // build our actual testrail api client
+            // from the configured credentials
+            var client = new TestRailAPIClient(testRailURL, testRailUsername, testRailPassword, this.testRailTimeoutSeconds);
+
+            // create our reader to extract data like error messages
+            // from our current test activity container
+            var resultReader = new TestResultReader(container);
 
 
-            int timeoutSeconds = 5;
-
-            var client = new TestRailAPIClient(testRailURL, testRailUsername, testRailPassword, timeoutSeconds);
-
-
-            string comment = "Automatic Ranorex Test Execution";
+            string comment = "";
 
             Task<TestRailResponse> task = null;
+
 
             switch (test.Status)
             {
                 case ActivityStatus.Success:
+                    comment = "Automatic Ranorex Test Execution";
                     task = client.SendResult(testRunID, this.TestCaseID, (int)TestRailStatus.STATUS_PASSED, comment);
                     break;
 
                 case ActivityStatus.Failed:
+                    comment = resultReader.GetErrorMessage();
                     task = client.SendResult(testRunID, this.TestCaseID, (int)TestRailStatus.STATUS_FAILED, comment);
                     break;
 
                 default:
+                    comment = "Automatic Ranorex Test Execution";
                     task = client.SendResult(testRunID, this.TestCaseID, (int)TestRailStatus.STATUS_NOT_TESTED, comment);
                     break;
             }
@@ -101,14 +123,17 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
                 return;
             }
 
-
+            // run our testrail api client and
+            // wait for the result before continuing
             task.Wait();
+
 
             TestRailResponse response = task.Result;
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                string testRunLink = testRailURL + "/index.php?/runs/view/" + testRunID.ToUpper().Replace("R", "");
+                // build our testrail deep link to our provided test run
+                string testRunLink = this.BuildTestRunDeepLink(testRailURL, testRunID);
 
                 Report.Success("Successfully sent Test Result for Test " + this.TestCaseID + " to TestRail!");
                 Report.Link("Open Test Run", testRunLink);
@@ -120,32 +145,15 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="testRailURL"></param>
+        /// <param name="testRunID"></param>
         /// <returns></returns>
-        private bool isValidCredentialData(string url, string username, string password)
+        private string BuildTestRunDeepLink(string testRailURL, string testRunID)
         {
-            if (string.IsNullOrEmpty(url))
-            {
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(username))
-            {
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(password))
-            {
-                return false;
-            }
-
-            return true;
+            return testRailURL + "/index.php?/runs/view/" + testRunID.ToUpper().Replace("R", "");
         }
 
     }
