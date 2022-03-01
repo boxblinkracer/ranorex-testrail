@@ -58,21 +58,28 @@ namespace boxblinkracer.Ranorex.TestRail.Services.Client
         /// <param name="comment"></param>
         public async Task<TestRailResponse> SendResult(string runID, string caseID, int statusID, string comment)
         {
-            // remove the leading R and C 
-            // identifiers. we only need the digits!
-            runID = runID.ToUpper().Replace("R", "");
-            caseID = caseID.ToUpper().Replace("C", "");
+            try
+            {
+                // remove the leading R and C 
+                // identifiers. we only need the digits!
+                runID = runID.ToUpper().Replace("R", "");
+                caseID = caseID.ToUpper().Replace("C", "");
 
-            // build our json content
-            var requestBody = new StringContent(this.BuildJSON(statusID, comment), Encoding.UTF8, "application/json");
+                // build our json content
+                var requestBody = new StringContent(this.BuildJSON(statusID, comment), Encoding.UTF8, "application/json");
 
-            // send our result to testrail
-            // and wait for the response
-            var response = await this.client.PostAsync(this.baseURL + "/add_result_for_case/" + runID + "/" + caseID, requestBody);
-            var responseBody = await response.Content.ReadAsStringAsync();
+                // send our result to testrail
+                // and wait for the response
+                var response = await this.client.PostAsync(this.baseURL + "/add_result_for_case/" + runID + "/" + caseID, requestBody);
+                var responseBody = await response.Content.ReadAsStringAsync();
 
-            // build our response object
-            return new TestRailResponse(response.StatusCode, responseBody);
+                // build our response object
+                return new TestRailResponse(response.StatusCode, responseBody);
+            }
+            catch (Exception ex)
+            {
+                return new TestRailResponse(System.Net.HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
 

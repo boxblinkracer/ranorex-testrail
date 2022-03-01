@@ -140,7 +140,7 @@ namespace boxblinkracer.Ranorex.TestRail.Modules
             }
             else
             {
-                Report.Info("TestRail API Response: " + response.Content);
+                Report.Warn("TestRail API Response: " + response.Content);
                 Report.Error("Error when sending Result for Test " + this.TestCaseID + " to TestRail!");
             }
         }
